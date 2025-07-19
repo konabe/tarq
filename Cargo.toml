@@ -3,7 +3,7 @@ name = "rtok_ts-analyzer"
 version = "0.1.2"
 edition = "2024"
 authors = ["Ryota Konabe <rt.konabe@gmail.com>"]
-description = "A sample project with wasm-pack"
+description = "Tool collecting code metrics for TypeScript"
 license = "MIT/Apache-2.0"
 
 [lib]
