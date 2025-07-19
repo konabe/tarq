@@ -1,2 +1,6 @@
 /target
 pkg/
+
+# for dev
+index.js
+output.json
