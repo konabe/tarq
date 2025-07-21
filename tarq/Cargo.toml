@@ -10,4 +10,4 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-tarq_core = { version = "0.1.0", path = "../tarq_core" }
+tarq_core = { version = "0.1", path = "../tarq_core" }

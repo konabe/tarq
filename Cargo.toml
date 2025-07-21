@@ -3,7 +3,7 @@ resolver = "3"
 members = ["tarq", "tarq_core"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Ryota Konabe <rt.konabe@gmail.com>"]
 description = "Tool collecting code metrics for TypeScript"
 repository = "https://github.com/konabe/tarq"

@@ -9,6 +9,11 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 22.x
+          registry-url: "https://registry.npmjs.org"
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Cache cargo registry
@@ -41,3 +46,18 @@ jobs:
         run: cargo publish --verbose --manifest-path tarq_core/Cargo.toml
       - name: Publish tarq
         run: cargo publish --verbose --manifest-path tarq/Cargo.toml
+      - name: Switch directory
+        run: cd tarq_core
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+      - name: Build npm project
+        run: wasm-pack build --release --target nodejs
+      - name: wasm-pack publish when possible
+        run: |
+          if npx can-npm-publish --verbose pkg; then
+              wasm-pack publish
+          else
+              echo "publish skipped"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
