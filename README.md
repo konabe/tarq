@@ -1,1 +1,1 @@
-[![npm version](https://badge.fury.io/js/rtok_ts-analyzer.svg)](https://badge.fury.io/js/rtok_ts-analyzer)
+[![crates.io](https://img.shields.io/crates/v/tarq?label=latest)](https://crates.io/crates/tarq)
