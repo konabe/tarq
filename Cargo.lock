@@ -746,14 +746,14 @@ dependencies = [
 
 [[package]]
 name = "tarq"
-version = "0.1.1"
+version = "0.1.4"
 dependencies = [
  "tarq_core",
 ]
 
 [[package]]
 name = "tarq_core"
-version = "0.1.1"
+version = "0.1.4"
 dependencies = [
  "serde",
  "serde_json",

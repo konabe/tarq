@@ -9,16 +9,6 @@ use swc_common::sync::Lrc;
 use swc_common::{FileName, SourceMap};
 use swc_ecma_parser::{lexer::Lexer, Parser, StringInput, Syntax};
 
-#[wasm_bindgen]
-unsafe extern "C" {
-    pub unsafe fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-    unsafe { alert(&format!("Hello, {}!", name)) };
-}
-
 #[derive(Serialize, Debug)]
 struct Output {
     class_number: usize,
@@ -37,6 +27,7 @@ pub fn execute() {
     }
 }
 
+#[wasm_bindgen]
 pub fn analyze(file_name: &str, source_code_text: &str) -> String {
     let cm: Lrc<SourceMap> = Default::default();
     let fm = cm.new_source_file(
