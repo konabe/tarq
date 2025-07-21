@@ -46,15 +46,13 @@ jobs:
         run: cargo publish --verbose --manifest-path tarq_core/Cargo.toml
       - name: Publish tarq
         run: cargo publish --verbose --manifest-path tarq/Cargo.toml
-      - name: Switch directory
-        run: cd tarq_core
       - name: Install wasm-pack
         run: cargo install wasm-pack
       - name: Build npm project
-        run: wasm-pack build --release --target nodejs
+        run: wasm-pack build tarq_core --release --target nodejs
       - name: wasm-pack publish when possible
         run: |
-          if npx can-npm-publish --verbose pkg; then
+          if npx can-npm-publish --verbose tarq_core/pkg; then
               wasm-pack publish
           else
               echo "publish skipped"
