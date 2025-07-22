@@ -1,7 +1,8 @@
-name: Publish to crates.io
+name: Publish to crates.io & npm
 
 on:
   push:
+    # TODO: PRがClosedされたときにpublishするようにする
     branches:
       - main
 
@@ -9,8 +10,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
           registry-url: "https://registry.npmjs.org"
@@ -36,11 +37,11 @@ jobs:
         with:
           toolchain: stable
           override: true
-      - name: Build
+      - name: Build cargo project
         run: cargo build --release --verbose
-      # - name: Run tests
-      # run: cargo test --verbose
-      - name: Login
+      - name: Run tests
+        run: cargo test --verbose
+      - name: Login to crates.io
         run: cargo login ${{ secrets.CARGO_TOKEN }}
       - name: Publish tarq_core
         run: cargo publish --verbose --manifest-path tarq_core/Cargo.toml
@@ -50,7 +51,7 @@ jobs:
         run: cargo install wasm-pack
       - name: Build npm project
         run: wasm-pack build tarq_core --release --target nodejs
-      - name: wasm-pack publish when possible
+      - name: Publish to npm
         run: |
           if npx can-npm-publish --verbose tarq_core/pkg; then
               wasm-pack publish
