@@ -10,4 +10,5 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+clap = { version = "4.5.41", features = ["derive"] }
 tarq_core = { version = "0.1", path = "../tarq_core" }

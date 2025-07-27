@@ -5,6 +5,7 @@ on:
     # TODO: PRがClosedされたときにpublishするようにする
     branches:
       - main
+      - feature/*
 
 jobs:
   publish:

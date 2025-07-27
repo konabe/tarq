@@ -3,4 +3,5 @@ pkg/
 
 # for dev
 index.js
+!tarq/tests/**/index.js
 output.json
