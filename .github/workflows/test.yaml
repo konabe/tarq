@@ -4,10 +4,10 @@ on:
   push:
     # TODO: PRがClosedされたときにpublishするようにする
     branches:
-      - main
+      - feature/*
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
@@ -41,22 +41,3 @@ jobs:
         run: cargo build --release --verbose
       - name: Run tests
         run: cargo test --verbose
-      - name: Login to crates.io
-        run: cargo login ${{ secrets.CARGO_TOKEN }}
-      - name: Publish tarq_core
-        run: cargo publish --verbose --manifest-path tarq_core/Cargo.toml
-      - name: Publish tarq
-        run: cargo publish --verbose --manifest-path tarq/Cargo.toml
-      - name: Install wasm-pack
-        run: cargo install wasm-pack
-      - name: Build npm project
-        run: wasm-pack build tarq_core --release --target nodejs
-      - name: Publish to npm
-        run: |
-          if npx can-npm-publish --verbose tarq_core/pkg; then
-              wasm-pack publish
-          else
-              echo "publish skipped"
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
