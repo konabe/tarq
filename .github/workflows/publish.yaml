@@ -43,9 +43,33 @@ jobs:
         run: cargo test --verbose
       - name: Login to crates.io
         run: cargo login ${{ secrets.CARGO_TOKEN }}
+      - name: Check if version already exists on crates.io
+        id: check_version_tarq_core
+        run: |
+          CRATE_NAME="tarq_core"
+          CRATE_VERSION=$(cargo metadata --manifest-path tarq_core/Cargo.toml --no-deps --format-version 1 | jq -r '.packages[0].version')
+          if curl --silent "https://crates.io/api/v1/crates/${CRATE_NAME}" | jq -e ".versions[] | select(.num == \"${CRATE_VERSION}\")" > /dev/null; then
+            echo "Version ${CRATE_VERSION} already exists."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish tarq_core
+        if: steps.check_version_tarq_core.outputs.exists == 'false'
         run: cargo publish --verbose --manifest-path tarq_core/Cargo.toml
+      - name: Check if version already exists on crates.io
+        id: check_version_tarq
+        run: |
+          CRATE_NAME="tarq_core"
+          CRATE_VERSION=$(cargo metadata --manifest-path tarq_core/Cargo.toml --no-deps --format-version 1 | jq -r '.packages[0].version')
+          if curl --silent "https://crates.io/api/v1/crates/${CRATE_NAME}" | jq -e ".versions[] | select(.num == \"${CRATE_VERSION}\")" > /dev/null; then
+            echo "Version ${CRATE_VERSION} already exists."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish tarq
+        if: steps.check_version_tarq.outputs.exists == 'false'
         run: cargo publish --verbose --manifest-path tarq/Cargo.toml
       - name: Install wasm-pack
         run: cargo install wasm-pack
