@@ -23,7 +23,7 @@ jobs:
       - name: Check if version already exists on crates.io
         id: check_version_tarq_core
         run: |
-          result=`./check_cargo_version.sh tarq_core`
+          result=`.github/scripts/check_cargo_version.sh tarq_core`
           if [ "$result" == "true" ]; then
             echo "Version already exists."
           fi
@@ -34,7 +34,7 @@ jobs:
       - name: Check if version already exists on crates.io
         id: check_version_tarq
         run: |
-          result=`./check_cargo_version.sh tarq`
+          result=`.github/scripts/check_cargo_version.sh  tarq`
           if [ "$result" == "true" ]; then
             echo "Version already exists."
           fi
