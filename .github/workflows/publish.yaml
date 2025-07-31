@@ -17,7 +17,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Checkout code
         uses: actions/checkout@v4
-      - run: git update-index --chmod=+x .github/scripts/check_cargo_version.sh
+      - run: chmod +x .github/scripts/check_cargo_version.sh
       - uses: ./.github/actions/build-and-test
       - name: Login to crates.io
         run: cargo login ${{ secrets.CARGO_TOKEN }}
