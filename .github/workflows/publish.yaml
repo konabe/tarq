@@ -10,7 +10,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - run: git update-index --chmod=+x .github/scripts/check_cargo_version.sh
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -18,6 +17,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Checkout code
         uses: actions/checkout@v4
+      - run: git update-index --chmod=+x .github/scripts/check_cargo_version.sh
       - uses: ./.github/actions/build-and-test
       - name: Login to crates.io
         run: cargo login ${{ secrets.CARGO_TOKEN }}
