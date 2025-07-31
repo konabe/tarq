@@ -60,8 +60,8 @@ jobs:
       - name: Check if version already exists on crates.io
         id: check_version_tarq
         run: |
-          CRATE_NAME="tarq_core"
-          CRATE_VERSION=$(cargo metadata --manifest-path tarq_core/Cargo.toml --no-deps --format-version 1 | jq -r '.packages[0].version')
+          CRATE_NAME="tarq"
+          CRATE_VERSION=$(cargo metadata --manifest-path tarq/Cargo.toml --no-deps --format-version 1 | jq -r '.packages[0].version')
           if curl --silent "https://crates.io/api/v1/crates/${CRATE_NAME}" | jq -e ".versions[] | select(.num == \"${CRATE_VERSION}\")" > /dev/null; then
             echo "Version ${CRATE_VERSION} already exists."
             echo "exists=true" >> "$GITHUB_OUTPUT"
