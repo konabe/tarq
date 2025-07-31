@@ -17,7 +17,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Checkout code
         uses: actions/checkout@v4
-      - uses: ./.github/workflows/_build_test.yml
+      - uses: ./.github/actions/build-and-test
       - name: Login to crates.io
         run: cargo login ${{ secrets.CARGO_TOKEN }}
       - name: Check if version already exists on crates.io
