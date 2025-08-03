@@ -21,7 +21,7 @@ fn integration_test() {
         }
     "#;
     let output = analyze(file_name, source_code);
-    assert_eq!(output, "{\n  \"class_number\": 2\n}")
+    assert_eq!(output, "{\n  \"class_number\": 2,\n  \"function_number\": 1\n}");
 }
 
 #[test]
@@ -30,5 +30,5 @@ fn integration_test_with_empty() {
     let source_code = r#"
     "#;
     let output = analyze(file_name, source_code);
-    assert_eq!(output, "{\n  \"class_number\": 0\n}")
+    assert_eq!(output, "{\n  \"class_number\": 0,\n  \"function_number\": 0\n}");
 }

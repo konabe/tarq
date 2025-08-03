@@ -10,6 +10,7 @@ use swc_ecma_parser::{Parser, StringInput, Syntax, lexer::Lexer};
 #[derive(Serialize, Debug)]
 struct Output {
     class_number: usize,
+    function_number: usize,
 }
 
 #[wasm_bindgen]
@@ -32,8 +33,14 @@ pub fn analyze(file_name: &str, source_code_text: &str) -> String {
         .iter()
         .filter(|item| matches!(item, ModuleItem::Stmt(Stmt::Decl(Decl::Class(_)))))
         .count();
+    let function_count = module
+        .body
+        .iter()
+        .filter(|item| matches!(item, ModuleItem::Stmt(Stmt::Decl(Decl::Fn(_)))))
+        .count();
     let output = Output {
         class_number: class_count,
+        function_number: function_count,
     };
     serde_json::to_string_pretty(&output).unwrap()
 }

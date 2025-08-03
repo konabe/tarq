@@ -10,6 +10,6 @@ fn e2e_test() {
         .output()
         .unwrap();
     let file_content = fs::read_to_string("output.json").unwrap();
-    assert_eq!(file_content, "{\n  \"class_number\": 4\n}");
+    assert_eq!(file_content, "{\n  \"class_number\": 4,\n  \"function_number\": 1\n}");
     assert!(child.status.success());
 }
